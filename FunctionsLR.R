@@ -75,8 +75,6 @@ LRMultiClass <- function(X, y, Xt, yt, numIter = 50, eta = 0.1, lambda = 1, beta
     objective[i + 1] = obj(X, y, lambda, beta)
     error_train[i + 1] = error(X, y, beta)
     error_test[i + 1] = error(Xt, yt, beta)
-    cat(sprintf("Iteration %d: Objective Value = %.4f, Training Error = %.2f%%, Test Error = %.2f%%\n", 
-                i, objective[i + 1], error_train[i + 1], error_test[i + 1]))
   }
   
   ## Return output
