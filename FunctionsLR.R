@@ -67,11 +67,11 @@ LRMultiClass <- function(X, y, Xt, yt, numIter = 50, eta = 0.1, lambda = 1, beta
   for (i in 1:numIter) { # repeats for every iteration until the total number of iterations is reached
     P = prob(X, beta)
     for (j in 1:K) { # repeats for the K classes
-      P_k = P[, k]
+      P_k = P[, j]
       W = diag(P_k * (1 - P_k)) # W_k is a diagonal matrix
-      grad = t(x) %*% (P[, k] - (1 * (y == (k-1)))) + lambda * beta[, k] # computes gradient
+      grad = t(x) %*% (P[, j] - (1 * (y == (j-1)))) + lambda * beta[, j] # computes gradient
       H = t(X) %*% W %*% X + lambda * diag(p) # computes Hessian
-      beta[, k] = beta[, k] - eta * solve(Hessian) %*% grad
+      beta[, j] = beta[, j] - eta * solve(Hessian) %*% grad
       # updates beta_k according to the damped Newton's method
     }
     objective[i + 1] = obj(X, y, lambda, beta)
@@ -99,7 +99,7 @@ prob = function(X, beta) {
 # this function returns the value of the objective function
 obj = function(X, y, lambda, beta) {
   P = prob(X, beta)
-  return( - sum(log(P[cbind(1:n, y + 1)])) + 0.5 * lambda * sum(beta^2) ) # sums the log probabilities of the class for each sample plus the ridge penalty term
+  return( - sum(log(P[cbind(1:nrow(X), y + 1)])) + 0.5 * lambda * sum(beta^2) ) # sums the log probabilities of the class for each sample plus the ridge penalty term
 }
 
 # this function computes the classification error
