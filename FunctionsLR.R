@@ -19,7 +19,7 @@
 LRMultiClass <- function(X, y, Xt, yt, numIter = 50, eta = 0.1, lambda = 1, beta_init = NULL){
   ## Check the supplied parameters as described. You can assume that X, Xt are matrices; y, yt are vectors; and numIter, eta, lambda are scalars. You can assume that beta_init is either NULL (default) or a matrix.
   ###################################
-  n = nrow(X); p = ncol(X); K = length(unique(y))
+  n = nrow(X); p = ncol(X); K = length(unique(y)) # K determined based on the supplied input
   # Check that the first column of X and Xt are 1s, if not - display appropriate message and stop execution.
   if (!all(X[, 1] == 1)) {
     stop("The first column of X should contain all 1s.") # the first column of X is for the intercept
@@ -51,13 +51,14 @@ LRMultiClass <- function(X, y, Xt, yt, numIter = 50, eta = 0.1, lambda = 1, beta
   if (is.null(beta_init)) {
     beta = matrix(0, p, K)
   } else {
-    if (ncol(beta_init) != K | nrow(beta_init)) {
+    if (nrow(beta_init) != p | ncol(beta_init) != K) {
       stop("The dimensions of beta_init supplied are not correct.") # returns error message if the dimensions of beta_init are not p times K
     }
     beta = beta_init # initialises beta_init if it passes the compatibility check
   }
   ## Calculate corresponding pk, objective value f(beta_init), training error and testing error given the starting point beta_init
   ##########################################################################
+  error_train = numeric(numIter + 1); error_test = numeric(numIter + 1); objective = numeric(numIter + 1) # initialise vectors for storing outputs
   
   ## Newton's method cycle - implement the update EXACTLY numIter iterations
   ##########################################################################
@@ -72,4 +73,16 @@ LRMultiClass <- function(X, y, Xt, yt, numIter = 50, eta = 0.1, lambda = 1, beta
   # error_test - (numIter + 1) length vector of testing error % at each iteration (+ starting value)
   # objective - (numIter + 1) length vector of objective values of the function that we are minimizing at each iteration (+ starting value)
   return(list(beta = beta, error_train = error_train, error_test = error_test, objective =  objective))
+}
+
+# this function computes P and returns P as a matrix for all possible k
+prob = function(X, beta) {
+  expm = exp(X %*% beta)
+  return(expm / rowSums(expm))
+}
+
+# this function returns the value of the objective function
+obj = function(X, y, lambda, beta) {
+  P = prob(X, beta)
+  return( - sum(log(P[cbind(1:n, y + 1)])) + 0.5 * lambda * sum(beta^2) ) # sums the log probabilities of the class for each sample plus the ridge penalty term
 }
