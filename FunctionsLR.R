@@ -71,7 +71,7 @@ LRMultiClass <- function(X, y, Xt, yt, numIter = 50, eta = 0.1, lambda = 1, beta
       W = diag(P_k * (1 - P_k)) # W_k is a diagonal matrix
       grad = t(X) %*% (P[, j] - (1 * (y == (j-1)))) + lambda * beta[, j] # computes gradient
       H = t(X) %*% W %*% X + lambda * diag(p) # computes Hessian
-      beta[, j] = beta[, j] - eta * solve(Hessian) %*% grad
+      beta[, j] = beta[, j] - eta * solve(H) %*% grad
       # updates beta_k according to the damped Newton's method
     }
     objective[i + 1] = obj(X, y, lambda, beta)
