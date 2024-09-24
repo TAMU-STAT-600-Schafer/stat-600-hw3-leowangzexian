@@ -3,7 +3,7 @@ source("FunctionsLR.R")
 
 # first test case
 Y = c(0, 1, 2, 3, 4, 3, 2, 1, 0, 2, 3, 4, 1, 2, 0, 4)
-X = matrix(rnorm(16*19), 15)
+X = matrix(rnorm(16*19), 16)
 Yt = c(1, 0, 3, 2)
 Xt = matrix(rnorm(4*19), 4)
 X = cbind(1, X)
