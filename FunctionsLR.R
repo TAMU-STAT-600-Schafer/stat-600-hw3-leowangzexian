@@ -19,20 +19,43 @@
 LRMultiClass <- function(X, y, Xt, yt, numIter = 50, eta = 0.1, lambda = 1, beta_init = NULL){
   ## Check the supplied parameters as described. You can assume that X, Xt are matrices; y, yt are vectors; and numIter, eta, lambda are scalars. You can assume that beta_init is either NULL (default) or a matrix.
   ###################################
+  n = nrow(X); p = ncol(X); K = length(unique(y))
   # Check that the first column of X and Xt are 1s, if not - display appropriate message and stop execution.
-  
+  if (!all(X[, 1] == 1)) {
+    stop("The first column of X should contain all 1s.") # the first column of X is for the intercept
+  }
+  if (!all(Xt[, 1] == 1)) {
+    stop("The first column of Xt should contain all 1s.") # the first column of Xt is for the intercept
+  }
   # Check for compatibility of dimensions between X and Y
-  
+  if (n != length(y)) {
+    stop("The number of rows of X should be the same as the length of y.") # returns error message if the dimensions of X and y do not match
+  }
   # Check for compatibility of dimensions between Xt and Yt
-  
+  if (nrow(Xt) != length(yt)) {
+    stop("The number of rows of Xt should be the same as the length of yt.") # returns error message if the dimensions of Xt and yt do not match
+  }
   # Check for compatibility of dimensions between X and Xt
-  
+  if (ncol(X) != ncol(Xt)) {
+    stop("The number of columns in X should be the same as the number of columns in Xt.") # returns error message if the dimensions of X and Xt do not match
+  }
   # Check eta is positive
-  
+  if (eta <= 0) {
+    stop("Eta should be positive.") # ensures that the learning rate is positive in order to proceed
+  }
   # Check lambda is non-negative
-  
+  if (lambda < 0) {
+    stop("Lambda should be non-negative") # ensures that the ridge regulariser is non-negative in order to proceed
+  }
   # Check whether beta_init is NULL. If NULL, initialize beta with p x K matrix of zeroes. If not NULL, check for compatibility of dimensions with what has been already supplied.
-  
+  if (is.null(beta_init)) {
+    beta = matrix(0, p, K)
+  } else {
+    if (ncol(beta_init) != K | nrow(beta_init)) {
+      stop("The dimensions of beta_init supplied are not correct.") # returns error message if the dimensions of beta_init are not p times K
+    }
+    beta = beta_init # initialises beta_init if it passes the compatibility check
+  }
   ## Calculate corresponding pk, objective value f(beta_init), training error and testing error given the starting point beta_init
   ##########################################################################
   
