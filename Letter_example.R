@@ -34,6 +34,10 @@ out = LRMultiClass(X, Y, Xt, Yt, numIter = 50, eta = 0.01, lambda = 1) # smaller
 out = LRMultiClass(X, Y, Xt, Yt, numIter = 50, eta = 0.5, lambda = 5) # larger lambda
 out = LRMultiClass(X, Y, Xt, Yt, numIter = 50, eta = 0.5, lambda = 0.5) # smaller lambda
 
+start = Sys.time()
+out = LRMultiClass(X, Y, Xt, Yt, numIter = 50, eta = 0.1, lambda = 1)
+print(Sys.time() - start)
+
 # [ToDo] Use microbenchmark to time your code with lambda=1 and 50 iterations. To save time, only apply microbenchmark 5 times.
 library(microbenchmark)
 print(microbenchmark(
@@ -43,4 +47,4 @@ print(microbenchmark(
 
 # [ToDo] Report the median time of your code from microbenchmark above in the comments below
 
-# Median time:  (in sec)
+# Median time:  1.319398 (in sec)
