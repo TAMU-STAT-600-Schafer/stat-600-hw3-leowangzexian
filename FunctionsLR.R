@@ -86,3 +86,9 @@ obj = function(X, y, lambda, beta) {
   P = prob(X, beta)
   return( - sum(log(P[cbind(1:n, y + 1)])) + 0.5 * lambda * sum(beta^2) ) # sums the log probabilities of the class for each sample plus the ridge penalty term
 }
+
+# this function computes the classification error
+error = function(X, y, beta) {
+  predicted_class = max.col(prob(X, beta)) - 1
+  return(100 * mean(predicted_class != y)) # returns the proportion of misclassified samples
+}
