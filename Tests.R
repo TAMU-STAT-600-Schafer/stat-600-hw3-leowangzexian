@@ -93,7 +93,7 @@ Yt <- letter_test[, 1]
 Xt <- as.matrix(letter_test[, -1])
 X = cbind(1, X)
 Xt = cbind(1, Xt)
-out = LRMultiClass(X, Y, Xt, Yt, numIter = 50, eta = 0.1, lambda = 1, beta_init = matrix(10, ncol(X), length(unique(Y))))
+out = LRMultiClass(X, Y, Xt, Yt, numIter = 50, eta = 0.1, lambda = 1, beta_init = matrix(1, ncol(X), length(unique(Y))))
 plot(out$objective, type = 'o', xlab = "number of iterations", ylab = "objective values")
 plot(out$error_train, type = 'o', xlab = "number of iterations", ylab = "training error")
 plot(out$error_test, type = 'o')
