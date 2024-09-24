@@ -53,10 +53,10 @@ out = LRMultiClass(X, Y, Xt, Yt, numIter = 50, eta = 0.1, lambda = 1, beta_init 
 out = LRMultiClass(X, Y, Xt, Yt, numIter = 50, eta = 0.1, lambda = 1, beta_init = matrix(0, 2, 5))
 
 # 2nd test case
-Y = rbinom(200, size = 10, prob = 0.5) 
-X = matrix(rnorm(200*99), 200)
-Yt = rbinom(30, size = 10, prob = 0.5) 
-Xt = matrix(rnorm(30*99), 30)
+Y = rbinom(200, size = 10, prob = 0.5) - 1
+X = matrix(rbinom(200*99, 10, 0.5), 200)
+Yt = rbinom(30, size = 10, prob = 0.5) - 1
+Xt = matrix(rbinom(30*99, 10, 0.5), 30)
 X = cbind(1, X)
 Xt = cbind(1, Xt)
 out = LRMultiClass(X, Y, Xt, Yt, numIter = 50, eta = 0.1, lambda = 1)
