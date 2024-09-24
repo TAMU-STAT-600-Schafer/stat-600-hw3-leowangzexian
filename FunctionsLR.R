@@ -67,7 +67,7 @@ LRMultiClass <- function(X, y, Xt, yt, numIter = 50, eta = 0.1, lambda = 1, beta
     P = prob(X, beta)
     for (j in 1:K) { # repeats for the K classes
       P_k = P[, j]
-      grad = t(X) %*% (P[, j] - (1 * (y == (j-1)))) + lambda * beta[, j] # computes gradient
+      grad = t(X) %*% (P[, j] - (1 * (y == (j - 1)))) + lambda * beta[, j] # computes gradient
       H = t(X) %*% (X * (P_k * (1 - P_k))) + lambda * diag(p) # computes Hessian, using vectorisation and avoiding the use of the matrix W_k
       beta[, j] = beta[, j] - eta * solve(H) %*% grad
       # updates beta_k according to the damped Newton's method
