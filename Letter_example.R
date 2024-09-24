@@ -47,4 +47,4 @@ print(microbenchmark(
 
 # [ToDo] Report the median time of your code from microbenchmark above in the comments below
 
-# Median time:  1.319398 (in sec)
+# Median time:  1.303539 (in sec)
