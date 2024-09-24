@@ -67,7 +67,8 @@ LRMultiClass <- function(X, y, Xt, yt, numIter = 50, eta = 0.1, lambda = 1, beta
   for (i in 1:numIter) { # repeats for every iteration until the total number of iterations is reached
     P = prob(X, beta)
     for (j in 1:K) { # repeats for the K classes
-      W = diag(as.vector(P[, k] * (1 - P[, k]))) # W_k is a diagonal matrix
+      P_k = P[, k]
+      W = diag(P_k * (1 - P_k)) # W_k is a diagonal matrix
       grad = t(x) %*% (P[, k] - (1 * (y == (k-1)))) + lambda * beta[, k] # computes gradient
       H = t(X) %*% W %*% X + lambda * diag(p) # computes Hessian
       beta[, k] = beta[, k] - eta * solve(Hessian) %*% grad
