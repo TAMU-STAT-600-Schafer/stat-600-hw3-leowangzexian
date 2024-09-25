@@ -42,9 +42,9 @@ print(Sys.time() - start)
 library(microbenchmark)
 print(microbenchmark(
   LRMultiClass(X, Y, Xt, Yt, numIter = 50, eta = 0.1, lambda = 1),
-  times = 5
+  times = 10
 ))
 
 # [ToDo] Report the median time of your code from microbenchmark above in the comments below
 
-# Median time:  1.303539 (in sec)
+# Median time: 1.288502 (in sec)
